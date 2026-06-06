@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useRef, useState } from 'react';
 import DotGrid from './DotGrid';
+import { useOptimizedScroll } from './useOptimizedScroll';
 
 // --- MOCK DATA ---
 const BLOG_ENTRIES = [
@@ -78,6 +79,9 @@ export default function SplitScreenPage({
   onTriggerReverseTransition: () => void;
   onTriggerForwardTransition: () => void;
 }) {
+  const leftScrollRef = useRef<HTMLDivElement>(null);
+  const rightScrollRef = useRef<HTMLDivElement>(null);
+  
   // Use independent motion values for flex properties
   const leftRatio = useMotionValue(1);
   const rightRatio = useMotionValue(1);
@@ -102,36 +106,17 @@ export default function SplitScreenPage({
     setHoveredSide(null);
   };
 
-  const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const isAtTop = el.scrollTop <= 0;
-    // We add a tiny 2px buffer to account for fractional pixel scrolling on high-DPI screens
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
+  useOptimizedScroll({
+    containerRef: leftScrollRef,
+    onReverse: onTriggerReverseTransition,
+    onForward: onTriggerForwardTransition
+  });
 
-    if (e.deltaY < 0 && isAtTop) {
-      onTriggerReverseTransition();
-    } else if (e.deltaY > 0 && isAtBottom) {
-      onTriggerForwardTransition();
-    }
-  };
-
-  let touchStartY = 0;
-  const handleTouchStart = (e: React.TouchEvent) => { 
-    touchStartY = e.touches[0].clientY; 
-  };
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const deltaY = e.touches[0].clientY - touchStartY;
-    
-    const isAtTop = el.scrollTop <= 0;
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
-
-    if (deltaY > 50 && isAtTop) {
-      onTriggerReverseTransition();
-    } else if (deltaY < -50 && isAtBottom) {
-      onTriggerForwardTransition();
-    }
-  };
+  useOptimizedScroll({
+    containerRef: rightScrollRef,
+    onReverse: onTriggerReverseTransition,
+    onForward: onTriggerForwardTransition
+  });
 
   return (
     <motion.div 
@@ -168,11 +153,9 @@ export default function SplitScreenPage({
 
       {/* LEFT PANEL: BLOG */}
       <motion.div 
+        ref={leftScrollRef}
         style={{ flex: leftFlex }} 
         onMouseEnter={handleBlogEnter}
-        onWheel={handleScroll}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
         className="h-full bg-black/60 overflow-y-auto overflow-x-hidden relative transition-colors duration-500 hover:bg-black/20 border-r border-white/5 z-10"
       >
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none z-0 fixed" />
@@ -203,11 +186,9 @@ export default function SplitScreenPage({
 
       {/* RIGHT PANEL: PHOTOGRAPHY */}
       <motion.div 
+        ref={rightScrollRef}
         style={{ flex: rightFlex }} 
         onMouseEnter={handleGalleryEnter}
-        onWheel={handleScroll}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
         className="h-full bg-black/60 relative overflow-y-auto overflow-x-hidden transition-colors duration-500 hover:bg-black/20 z-10"
       >
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none z-0 fixed" />

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import MagnetLines from './MagnetLines';
 import Dither from './Dither';
 import { Signature } from './Signature';
+import { useOptimizedScroll } from './useOptimizedScroll';
 
 const SOCIALS = [
   { name: 'RESUME', url: 'https://drive.google.com/file/d/1-aySDKr-qELNRwXdDJYEp8wrK51INs04/view' },
@@ -31,26 +32,10 @@ export default function ContactPage({ onTriggerReverseTransition }: { onTriggerR
     else if (latest <= 50 && isFooterVisible) setIsFooterVisible(false);
   });
 
-  let touchStartY = 0;
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY = e.touches[0].clientY;
-  };
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!scrollRef.current) return;
-    const deltaY = e.touches[0].clientY - touchStartY;
-    // Only trigger reverse if we are at the absolute top of the scroll container
-    if (deltaY > 50 && scrollRef.current.scrollTop <= 0) {
-      onTriggerReverseTransition();
-    }
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!scrollRef.current) return;
-    // Only trigger reverse transition if scrolling UP and we're at the very top
-    if (e.deltaY < 0 && scrollRef.current.scrollTop <= 0) {
-      onTriggerReverseTransition();
-    }
-  };
+  useOptimizedScroll({
+    containerRef: scrollRef,
+    onReverse: onTriggerReverseTransition
+  });
 
   const handleCopy = (idx: number, text: string) => {
     navigator.clipboard.writeText(text);
@@ -65,9 +50,6 @@ export default function ContactPage({ onTriggerReverseTransition }: { onTriggerR
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       transition={{ type: "spring", bounce: 0, duration: 1.2 }}
       className="w-full h-screen bg-black overflow-y-auto overflow-x-hidden relative"
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
       ref={scrollRef}
     >
       {/* Background grain - Fixed to viewport */}

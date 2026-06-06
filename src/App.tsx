@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import LandingPage from './LandingPage';
 import ExperiencePage from './ExperiencePage';
 import ProjectsPage from './ProjectsPage';
@@ -56,6 +58,26 @@ function AppContent() {
   const [hyperspeedDir, setHyperspeedDir] = useState<'forward' | 'reverse'>('forward');
   const [slideDirection, setSlideDirection] = useState<'forward' | 'reverse' | 'none'>('none');
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Global Smooth Scroll Initialization (Buttermax)
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.1,
+      wheelMultiplier: 1,
+      smoothWheel: true,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   // Stop music if leaving the secret areas
   useEffect(() => {

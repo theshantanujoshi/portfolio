@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 import DarkVeil from './DarkVeil';
+import { useOptimizedScroll } from './useOptimizedScroll';
 
 const timelineData = [
   {
@@ -85,35 +86,11 @@ export default function ExperiencePage({
   const smoothTimelineScroll = useSpring(rawTimelineScroll, springConfig);
   const lightsaberHeight = useTransform(smoothTimelineScroll, [0, 1], ["0%", "100%"]);
 
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const isAtTop = el.scrollTop <= 0;
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
-
-    if (isAtTop && e.deltaY < -50) {
-      onTriggerReverseTransition();
-    }
-    if (isAtBottom && e.deltaY > 50) {
-      onTriggerForwardTransition();
-    }
-  };
-
-  let touchStartY = 0;
-  const handleTouchStart = (e: React.TouchEvent) => { touchStartY = e.touches[0].clientY; };
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const deltaY = touchStartY - e.touches[0].clientY;
-
-    const isAtTop = el.scrollTop <= 0;
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
-
-    if (isAtTop && deltaY < -50) {
-      onTriggerReverseTransition();
-    }
-    if (isAtBottom && deltaY > 50) {
-      onTriggerForwardTransition();
-    }
-  };
+  useOptimizedScroll({
+    containerRef,
+    onReverse: onTriggerReverseTransition,
+    onForward: onTriggerForwardTransition
+  });
 
   return (
     <motion.div 
@@ -123,9 +100,6 @@ export default function ExperiencePage({
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       transition={{ type: "spring", bounce: 0, duration: 1.2 }}
       className="bg-black text-white font-sans w-full h-full overflow-y-auto overflow-x-hidden relative"
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
     >
       {/* REACT BITS DARK VEIL BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-80 mix-blend-screen grayscale contrast-150 brightness-150">

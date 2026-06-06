@@ -363,10 +363,11 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, direction = 'forwa
 
         this.renderer = new THREE.WebGLRenderer({
           antialias: false,
-          alpha: true
+          alpha: true,
+          powerPreference: "high-performance"
         });
         this.renderer.setSize(initW, initH, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(window.devicePixelRatio > 1 ? 1 : window.devicePixelRatio); // Cap pixel ratio to 1
         this.composer = new EffectComposer(this.renderer);
         container.append(this.renderer.domElement);
 
@@ -421,6 +422,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, direction = 'forwa
         this.onContextMenu = this.onContextMenu.bind(this);
 
         this.onWindowResize = this.onWindowResize.bind(this);
+        this.resizeTimeout = null;
         window.addEventListener('resize', this.onWindowResize);
 
         if (container.offsetWidth > 0 && container.offsetHeight > 0) {
@@ -429,19 +431,22 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, direction = 'forwa
       }
 
       onWindowResize() {
-        const width = this.container.offsetWidth;
-        const height = this.container.offsetHeight;
+        if (this.resizeTimeout) clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+          const width = this.container.offsetWidth;
+          const height = this.container.offsetHeight;
 
-        if (width <= 0 || height <= 0) {
-          this.hasValidSize = false;
-          return;
-        }
+          if (width <= 0 || height <= 0) {
+            this.hasValidSize = false;
+            return;
+          }
 
-        this.renderer.setSize(width, height);
-        this.camera.aspect = width / height;
-        this.camera.updateProjectionMatrix();
-        this.composer.setSize(width, height);
-        this.hasValidSize = true;
+          this.renderer.setSize(width, height);
+          this.camera.aspect = width / height;
+          this.camera.updateProjectionMatrix();
+          this.composer.setSize(width, height);
+          this.hasValidSize = true;
+        }, 150);
       }
 
       initPasses() {
@@ -451,24 +456,15 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, direction = 'forwa
           new BloomEffect({
             luminanceThreshold: 0.2,
             luminanceSmoothing: 0,
-            resolutionScale: 1
+            resolutionScale: 0.5 // Massive perf fix: Half resolution bloom
           })
         );
 
-        const smaaPass = new EffectPass(
-          this.camera,
-          new SMAAEffect({
-            preset: SMAAPreset.MEDIUM,
-            searchImage: SMAAEffect.searchImageDataURL,
-            areaImage: SMAAEffect.areaImageDataURL
-          })
-        );
         this.renderPass.renderToScreen = false;
-        this.bloomPass.renderToScreen = false;
-        smaaPass.renderToScreen = true;
+        this.bloomPass.renderToScreen = true; // Bypass SMAA completely for raw speed
+        
         this.composer.addPass(this.renderPass);
         this.composer.addPass(this.bloomPass);
-        this.composer.addPass(smaaPass);
       }
 
       loadAssets() {
@@ -1196,7 +1192,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS, direction = 'forwa
     };
   }, [effectOptions]);
 
-  return <div id="lights" ref={hyperspeed}></div>;
+  return <div id="lights" ref={hyperspeed} style={{ willChange: "transform, opacity", backfaceVisibility: "hidden", transformStyle: "preserve-3d" }}></div>;
 };
 
 export default Hyperspeed;

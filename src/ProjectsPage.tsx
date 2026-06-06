@@ -2,42 +2,16 @@ import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import StickyProjectList from './StickyProjectList';
 import Waves from './Waves';
+import { useOptimizedScroll } from './useOptimizedScroll';
 
 export default function ProjectsPage({ onTriggerTransition }: { onTriggerTransition: (direction: 'forward' | 'reverse') => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const isAtTop = el.scrollTop <= 0;
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
-
-    if (isAtTop && e.deltaY < -50) {
-      onTriggerTransition('reverse');
-    }
-    if (isAtBottom && e.deltaY > 50) {
-      onTriggerTransition('forward');
-    }
-  };
-
-  let touchStartY = 0;
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartY = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const deltaY = touchStartY - e.touches[0].clientY;
-    
-    const isAtTop = el.scrollTop <= 0;
-    const isAtBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 2;
-
-    if (isAtTop && deltaY < -50) {
-      onTriggerTransition('reverse');
-    }
-    if (isAtBottom && deltaY > 50) {
-      onTriggerTransition('forward');
-    }
-  };
+  useOptimizedScroll({
+    containerRef,
+    onReverse: () => onTriggerTransition('reverse'),
+    onForward: () => onTriggerTransition('forward')
+  });
 
   return (
     <motion.div 
@@ -47,9 +21,6 @@ export default function ProjectsPage({ onTriggerTransition }: { onTriggerTransit
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
       transition={{ type: "spring", bounce: 0, duration: 1.2 }}
       className="bg-black text-white font-sans w-full h-full overflow-y-auto overflow-x-hidden relative"
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
     >
       {/* REACT BITS INTERACTIVE WAVES BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none">
