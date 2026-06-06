@@ -13,15 +13,14 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
   useEffect(() => {
     if (location.state?.fromReverse) {
       // Scale 4x prevents the browser from crashing/clipping while still giving a zoom effect
-      controls.set({ scale: 4, opacity: 0, filter: "blur(5px)" });
+      controls.set({ scale: 4, opacity: 0 });
       controls.start({ 
         scale: 1, 
         opacity: 1, 
-        filter: "blur(0px)", 
         transition: { duration: 0.75, ease: [0.65, 0, 0.35, 1], delay: 0.1 } 
       });
     } else {
-      controls.set({ scale: 1, opacity: 1, filter: "blur(0px)" });
+      controls.set({ scale: 1, opacity: 1 });
     }
   }, [location, controls]);
 
@@ -44,7 +43,6 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
     controls.start({ 
       scale: 4, 
       opacity: 0, 
-      filter: "blur(5px)", 
       transition: { duration: 0.75, ease: [0.65, 0, 0.35, 1] } 
     });
     onTriggerTransition();
@@ -64,7 +62,6 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
       <motion.div 
         animate={controls}
         className="absolute inset-0 w-full h-full origin-center flex flex-col items-center justify-center"
-        style={{ willChange: "transform, opacity, filter", backfaceVisibility: "hidden" }}
       >
         {/* STATIC BACKGROUND */}
         <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
@@ -78,7 +75,7 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
               playsInline
             />
           </div>
-          <div className="absolute inset-0 z-10 opacity-70 mix-blend-screen">
+          <div className="absolute inset-0 z-10 opacity-70">
             <LineWaves
               speed={0.3}
               innerLineCount={32}
