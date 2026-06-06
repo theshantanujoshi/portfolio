@@ -16,7 +16,7 @@ const DANCING_GIFS = [
   "https://tenor.com/view/geol-goyang-joget-gif-8343380966297455244.gif",
   "https://tenor.com/view/cat-dance-cat-cat-dancing-dancing-cat-daily-cat-dance-gif-15678680634713803928.gif",
   "https://tenor.com/view/cat-cat-meme-cat-bopping-head-cat-dancing-cat-bopping-gif-15291519990855066134.gif",
-  "https://tenor.com/view/animated-animated-dog-dancing-dancing-dog-happy-dog-gif-1873593611143329153.gif"
+  "https://tenor.com/view/cat-meme-funny-gif-cat-dancing-dance-gif-5671822644946302447.gif"
 ];
 
 const FLOATING_TEXTS = [
