@@ -96,22 +96,20 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
             />
           </div>
           <div className="absolute inset-0 z-20 pointer-events-none">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.6)_0%,transparent_50%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,1)_100%)]" />
-            <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,1)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.3)_0%,transparent_40%,rgba(0,0,0,0.9)_80%,rgba(0,0,0,1)_100%)]" />
           </div>
         </div>
 
         {/* ELEGANT CINEMATIC HERO TYPOGRAPHY */}
         <div className="relative flex flex-col items-center justify-center text-center px-6 pointer-events-none z-20 origin-center">
-          <h1 className="text-7xl md:text-8xl lg:text-9xl text-white tracking-tight whitespace-nowrap font-['Instrument_Serif'] drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl text-white tracking-tight whitespace-nowrap font-['Instrument_Serif'] [text-shadow:0_0_30px_rgba(0,0,0,0.8)]">
             Shantanu <em 
               className="italic text-white/80 underline underline-offset-[12px] decoration-1 decoration-white/20 hover:decoration-white/80 pointer-events-auto cursor-pointer hover:text-white transition-all duration-300"
               onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', ctrlKey: true }))}
             >Joshi</em>
           </h1>
-          <div className="mt-10 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] z-20">
-            <p className="text-white/70 text-sm md:text-base font-medium tracking-[0.3em] uppercase">
+          <div className="mt-10 z-20">
+            <p className="text-white/70 text-sm md:text-base font-medium tracking-[0.3em] uppercase [text-shadow:0_0_15px_rgba(0,0,0,0.8)]">
               Frontend Engineer <span className="text-white/30 mx-2">|</span> Technical Writer <span className="text-white/30 mx-2">|</span> Operations Manager
             </p>
           </div>
