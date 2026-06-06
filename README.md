@@ -4,7 +4,7 @@ A high-performance, visually immersive digital portfolio built with React and Vi
 
 ---
 
-## ⚡ Key Features
+## Key Features
 
 - **Kinetic Typography:** Custom scrolling marquees and physics-based split-text animations.
 - **Cinematic Transitions:** Advanced routing mechanics utilizing a "hyperspeed" warp engine between views.
@@ -18,7 +18,7 @@ A high-performance, visually immersive digital portfolio built with React and Vi
 - **Split-Screen Journal:** A responsive, dual-pane layout housing personal thoughts and a massive 40+ image masonry gallery.
 - **Dynamic Contact:** Interactive clipboard elements and social links.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework:** React 18 + TypeScript + Vite
 - **Styling:** Tailwind CSS + Vanilla CSS (for precise token control)
@@ -28,7 +28,7 @@ A high-performance, visually immersive digital portfolio built with React and Vi
   - OGL (Lightweight WebGL layer for shaders)
 - **Deployment & Tooling:** ESLint, PostCSS
 
-## 🚀 Running Locally
+## Running Locally
 
 To run this application locally, you will need [Node.js](https://nodejs.org/) installed on your machine.
 
