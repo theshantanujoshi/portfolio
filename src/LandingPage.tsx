@@ -105,7 +105,10 @@ export default function LandingPage({ onTriggerTransition }: { onTriggerTransiti
         {/* ELEGANT CINEMATIC HERO TYPOGRAPHY */}
         <div className="relative flex flex-col items-center justify-center text-center px-6 pointer-events-none z-20 origin-center">
           <h1 className="text-7xl md:text-8xl lg:text-9xl text-white tracking-tight whitespace-nowrap font-['Instrument_Serif'] drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-            Shantanu <em className="italic text-white/80">Joshi</em>
+            Shantanu <em 
+              className="italic text-white/80 underline underline-offset-[12px] decoration-1 decoration-white/20 hover:decoration-white/80 pointer-events-auto cursor-pointer hover:text-white transition-all duration-300"
+              onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'm', ctrlKey: true }))}
+            >Joshi</em>
           </h1>
           <div className="mt-10 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] z-20">
             <p className="text-white/70 text-sm md:text-base font-medium tracking-[0.3em] uppercase">
