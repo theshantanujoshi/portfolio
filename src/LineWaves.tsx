@@ -172,13 +172,7 @@ export default function LineWaves({
     }
 
     function resize() {
-      // MASSIVE PERF FIX: Downscale the webgl canvas resolution to 35% of native size.
-      // This reduces fragment shader calculations by nearly 90% while still looking perfectly smooth.
-      const dpr = 0.35;
-      renderer.setSize(container.offsetWidth * dpr, container.offsetHeight * dpr);
-      gl.canvas.style.width = '100%';
-      gl.canvas.style.height = '100%';
-      
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
       if (program) {
         program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
       }
