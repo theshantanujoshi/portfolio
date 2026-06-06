@@ -105,20 +105,27 @@ export default function MetricsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-12 lg:p-24 overflow-y-auto selection:bg-white/30 relative z-10">
-      {/* Background ambient glow */}
-      <div className="fixed top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen text-white p-6 md:p-12 lg:p-24 overflow-y-auto selection:bg-white/30 relative z-10">
+      {/* Base Black Background */}
+      <div className="fixed inset-0 bg-black -z-20 pointer-events-none" />
+      
+      {/* Custom Image Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-40 mix-blend-screen overflow-hidden">
+        <img src="/MetricsBackground.png" alt="Metrics Background" className="w-full h-full object-cover" />
+      </div>
 
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex items-center justify-between mb-12"
+        className="flex items-start md:items-center justify-between mb-12 flex-col md:flex-row gap-6 md:gap-0"
       >
         <div>
-          <h1 className="text-4xl md:text-5xl font-['Instrument_Serif'] italic tracking-tight">Behind the scenes</h1>
+          <h1 className="text-4xl md:text-5xl font-['Instrument_Serif'] italic tracking-tight mb-2">Behind the scenes</h1>
+          <p className="text-white/80 font-mono text-xs uppercase tracking-widest leading-relaxed">
+            You thought my portfolio was going to be all serious huh?
+          </p>
         </div>
         
         <button 
@@ -139,7 +146,7 @@ export default function MetricsPage() {
       >
 
         {/* 1. Big GitHub Header */}
-        <motion.div variants={BENTO_ITEM_VARIANTS} className="w-full bg-white/[0.03] border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col hover:bg-white/[0.05] transition-colors overflow-hidden">
+        <motion.div variants={BENTO_ITEM_VARIANTS} className="w-full bg-black/70 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col hover:bg-black/90 transition-colors overflow-hidden">
           <div className="flex justify-between items-start mb-6">
             <div>
               <p className="text-white/50 font-mono text-xs uppercase tracking-widest mb-1">GitHub Activity</p>
@@ -171,7 +178,7 @@ export default function MetricsPage() {
         <div className="flex flex-col lg:flex-row gap-4 md:gap-6 w-full">
           
           {/* 2. Local Time */}
-          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-1 min-w-[200px] bg-white/[0.03] border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/[0.05] transition-colors relative overflow-hidden">
+          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-1 min-w-[200px] bg-black/70 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-black/90 transition-colors relative overflow-hidden">
             <div className="absolute -bottom-10 -right-10 text-white/5 pointer-events-none">
               <FiClock size={160} />
             </div>
@@ -185,7 +192,7 @@ export default function MetricsPage() {
           </motion.div>
 
           {/* 3. Spotify */}
-          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-[1.5] bg-white/[0.03] border border-white/10 rounded-3xl p-6 relative overflow-hidden group flex flex-col sm:flex-row items-center gap-6 hover:bg-white/[0.05] transition-colors">
+          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-[1.5] bg-black/70 backdrop-blur-md border border-white/10 rounded-3xl p-6 relative overflow-hidden group flex flex-col sm:flex-row items-center gap-6 hover:bg-black/90 transition-colors">
             <div className="absolute top-6 right-6 text-[#1DB954]">
               <SiSpotify size={24} className="animate-pulse" />
             </div>
@@ -216,7 +223,7 @@ export default function MetricsPage() {
           </motion.div>
 
           {/* 4. Analytics */}
-          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-1 min-w-[200px] bg-white/[0.03] border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/[0.05] transition-colors relative overflow-hidden group">
+          <motion.div variants={BENTO_ITEM_VARIANTS} className="flex-1 min-w-[200px] bg-black/70 backdrop-blur-md border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-black/90 transition-colors relative overflow-hidden group">
             <div className="absolute -top-10 -right-10 text-[#3b82f6]/10 pointer-events-none group-hover:text-[#3b82f6]/20 transition-colors">
               <FiEye size={160} />
             </div>
