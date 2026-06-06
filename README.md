@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Shantanu Joshi — Digital Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance, visually immersive digital portfolio built with React and Vite. This application leans heavily into a brutalist, monochromatic aesthetic, utilizing WebGL and canvas-based shaders to create a tactile, interactive experience that feels more like a cinematic application than a standard website.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ⚡ Key Features
 
-## React Compiler
+- **Kinetic Typography:** Custom scrolling marquees and physics-based split-text animations.
+- **Cinematic Transitions:** Advanced routing mechanics utilizing a "hyperspeed" warp engine between views.
+- **Interactive WebGL Backgrounds:**
+  - **LineWaves:** A fluid, mouse-reactive waveform canvas.
+  - **Waves:** A monochromatic, fluid simulation shader.
+  - **DarkVeil:** An atmospheric, high-contrast WebGL background.
+  - **DotGrid:** A responsive, inertia-driven physics grid.
+  - **Dither & MagnetLines:** Tactile, retro-inspired footer interactions.
+- **Lightsaber Timeline:** A dynamic, scroll-linked SVG masking component used for professional history.
+- **Split-Screen Journal:** A responsive, dual-pane layout housing personal thoughts and a massive 40+ image masonry gallery.
+- **Dynamic Contact:** Interactive clipboard elements and social links.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework:** React 18 + TypeScript + Vite
+- **Styling:** Tailwind CSS + Vanilla CSS (for precise token control)
+- **Animation & Physics:** 
+  - Framer Motion (Declarative routing & springs)
+  - GSAP (Scroll triggers and complex timelines)
+  - OGL (Lightweight WebGL layer for shaders)
+- **Deployment & Tooling:** ESLint, PostCSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Running Locally
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+To run this application locally, you will need [Node.js](https://nodejs.org/) installed on your machine.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/theshantanujoshi/portfolio.git
+   cd portfolio
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+*Designed and engineered by Shantanu Joshi. 2026.*
